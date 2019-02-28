@@ -65,7 +65,7 @@ public class Repeater {
         return udpController;
     }
 
-    //listening data from tunnel and sending data over tunnel
+
     public static void startWorkWithTunnel(TCPConnection tcpTunnel, UDPController udpController, BlockingQueue<String> fromUDPdataBUffer) {
         tcpTunnelPool.submit(() -> {
             while (true) {
@@ -81,16 +81,16 @@ public class Repeater {
         });
     }
 
-    //listening data from destination ports and send it to data buffer
+
     public static void startWorkWithUDP(UDPController udpController, BlockingQueue<String> fromUDPdataBUffer) {
         udpDestsPool.submit(() -> {
-            while (true) {
+            while (true)
                 udpController.listenFromDest(fromUDPdataBUffer);
-            }
+
         });
     }
 
-    /*Methods below need for seting configuration of udp*/
+    /*Methods below need for setting configuration of udp*/
 
 
     private static List<Integer> extractDestPorts(String msg) {

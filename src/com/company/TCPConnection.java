@@ -14,7 +14,7 @@ public class TCPConnection {
     private PrintWriter writer;
 
 
-    //client contructor
+    //constructor for client
     TCPConnection(String ipHost, int port) {
         try {
             socket = new Socket(InetAddress.getByName(ipHost), port);
@@ -23,7 +23,7 @@ public class TCPConnection {
         }
     }
 
-    //server constructor
+    //constructor for server
     TCPConnection(int port) {
         try {
             server = new ServerSocket(port);

@@ -57,7 +57,6 @@ public class Agent {
                     int port = extractPortFromMSG(msg);
                     System.out.println(msg);
                     System.out.println(port);
-                    //finding out appropriate controller to send data to client
                     udpCommuniaction.stream().filter(i -> i.getBoundPort() == port).forEach(i -> i.sendDataToClient(msg));
                 }
             } catch (IOException E) {
@@ -66,7 +65,7 @@ public class Agent {
         });
     }
 
-    //creating a content of udp controllers which allowed to communiaction with clients
+    //creating a content of udp controllers list which allowed to communiaction with clients
     public static void startUDPs(String[] args) {
         Arrays.stream(Arrays.copyOfRange(args, 3, args.length)).mapToInt(Integer::parseInt).forEach(i -> {
             try {
@@ -78,7 +77,7 @@ public class Agent {
         });
     }
 
-    //listen for initial msg and after that listen messages from that source
+    //listen for initial msg and after that listen messages from that  client
     public static void startWorkWithUDP() {
         udpCommuniaction.forEach(i -> {
             udpPool.submit(() -> {

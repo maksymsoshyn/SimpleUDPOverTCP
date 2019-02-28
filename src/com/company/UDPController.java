@@ -28,7 +28,7 @@ public class UDPController {
     }
 
 
-    //create and share interface for managing udp
+
     public static UDPController create(int port) throws SocketException {
         UDPController connection = new UDPController();
         connection.udpSocket = new DatagramSocket(port);
@@ -53,7 +53,7 @@ public class UDPController {
         }
     }
 
-    ////listening message and check, whether it come from client host or not
+
     public void listenFromClient(BlockingQueue<String> bufferData) {
         String msg = listenMessage();
         if (receivedPacket.getPort() == client.getPortClient() && receivedPacket.getAddress().getHostAddress().equals(client.getNameClient())) {
@@ -67,17 +67,20 @@ public class UDPController {
         }
     }
 
-    //listening message and check, whether it come from dest host or not
+
     void listenFromDest(BlockingQueue<String> bufferData) {
-        @NotNull String msg = listenMessage();
-        if (destPorts.contains(receivedPacket.getPort()) && destIp.equals(receivedPacket.getAddress().getHostAddress())) {
-            try {
+        try {
+            @NotNull String msg = listenMessage();
+            if (destPorts.contains(receivedPacket.getPort()) && destIp.equals(receivedPacket.getAddress().getHostAddress())) {
                 System.out.println("UDP got a message from dest host");
                 System.out.println(msg);
                 bufferData.put(msg + " " + receivedPacket.getPort());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
             }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
@@ -94,7 +97,6 @@ public class UDPController {
     }
 
 
-    //sending data to client
     void sendDataToClient(String msg) {
         try {
             byte[] sendData = extractPureMSG(msg).getBytes();
@@ -108,7 +110,7 @@ public class UDPController {
         }
     }
 
-    //sending data to appropriate dest host
+
     void sendDataToDest(String msg) {
         try {
             byte[] sendData = extractPureMSG(msg).getBytes();
@@ -131,7 +133,7 @@ public class UDPController {
         this.destIp = destIp;
     }
 
-    //return info about socket to which UDP was bound
+
     public String toString() {
         return boundIp + " " + boundPort;
     }

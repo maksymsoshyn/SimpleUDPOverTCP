@@ -1,5 +1,8 @@
 package com.company;
 
+/*Wrapper class for storing info about client*/
+
+
 public class ClientInfo {
     private int portClient;
     private int destPort;
